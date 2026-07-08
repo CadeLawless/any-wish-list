@@ -3,6 +3,8 @@
 namespace App\Services;
 
 use App\Models\User;
+use App\Models\UserSession;
+use App\Services\SessionManager;
 
 class AuthService
 {
@@ -15,14 +17,46 @@ class AuthService
         }
 
         // Set session variables using SessionManager
-        \App\Services\SessionManager::setAuthUser($user, $remember);
+        \App\Services\SessionManager::setAuthUser($user);
         
         // Handle remember me database update
         if ($remember) {
-            $expireDate = date('Y-m-d H:i:s', strtotime('+1 year'));
-            User::updateSession($user['id'], session_id(), $expireDate);
-        } else {
-            User::updateSession($user['id'], null, null);
+
+            $selector = bin2hex(random_bytes(16));
+            $token = bin2hex(random_bytes(32));
+
+            UserSession::createSession([
+                'username' => $user['username'],
+                'selector' => $selector,
+                'token_hash' => hash(
+                    'sha256',
+                    $token
+                ),
+                'expires_at' => date(
+                    'Y-m-d H:i:s',
+                    strtotime('+1 year')
+                ),
+                'created_at' => date(
+                    'Y-m-d H:i:s'
+                ),
+                'ip_address' =>
+                    $_SERVER['REMOTE_ADDR'] ?? null,
+                'user_agent' =>
+                    $_SERVER['HTTP_USER_AGENT'] ?? null
+            ]);
+
+
+            setcookie(
+                'wishlist_remember',
+                $selector . ':' . $token,
+                [
+                    'expires' => time() + (86400 * 365),
+                    'path' => '/',
+                    'secure' => isset($_SERVER['HTTPS']),
+                    'httponly' => true,
+                    'samesite' => 'Lax'
+                ]
+            );
         }
 
         return true;
@@ -30,18 +64,18 @@ class AuthService
 
     public function logout(): void
     {
-        // Use SessionManager for logout
-        \App\Services\SessionManager::logout();
-        
-        // Clear remember me cookie with proper path
-        if (isset($_COOKIE['wishlist_session_id'])) {
-            setcookie('wishlist_session_id', '', time() - 3600, '');
+        SessionManager::startSession();
+
+        if (isset($_COOKIE['wishlist_remember'])) {
+
+            [$selector] = explode(':', $_COOKIE['wishlist_remember'], 2);
+
+            UserSession::deleteBySelector($selector);
+
+            SessionManager::clearRememberCookie();
         }
-        
-        // Clear session cookie (optional, for thoroughness)
-        if (isset($_COOKIE['PHPSESSID'])) {
-            setcookie('PHPSESSID', '', time() - 3600, '');
-        }
+
+        SessionManager::logout();
     }
 
     public function register(array $data): bool
@@ -82,16 +116,108 @@ class AuthService
             return User::findByUsernameOrEmail(\App\Services\SessionManager::getUsername());
         }
 
-        // Check remember me cookie
+        // Check for old session cookie
         if (isset($_COOKIE['wishlist_session_id'])) {
-            $sessionId = $_COOKIE['wishlist_session_id'];
-            $user = User::findBySessionId($sessionId);
-            
+
+            $oldSessionId = $_COOKIE['wishlist_session_id'];
+
+            $user = User::findBySessionId($oldSessionId);
+
             if ($user) {
-                // Auto-login using SessionManager
-                \App\Services\SessionManager::setAuthUser($user, false);
-                
+
+                // Restore login
+                SessionManager::setAuthUser($user);
+
+
+                // Create new remember token
+                $selector = bin2hex(random_bytes(16));
+                $token = bin2hex(random_bytes(32));
+
+
+                UserSession::createSession([
+                    'username' => $user['username'],
+                    'selector' => $selector,
+                    'token_hash' => hash('sha256', $token),
+                    'expires_at' => date(
+                        'Y-m-d H:i:s',
+                        strtotime('+1 year')
+                    ),
+                    'created_at' => date('Y-m-d H:i:s'),
+                    'ip_address' => $_SERVER['REMOTE_ADDR'] ?? null,
+                    'user_agent' => $_SERVER['HTTP_USER_AGENT'] ?? null
+                ]);
+
+
+                setcookie(
+                    'wishlist_remember',
+                    $selector . ':' . $token,
+                    [
+                        'expires' => time() + (86400 * 365),
+                        'path' => '/',
+                        'secure' => isset($_SERVER['HTTPS']),
+                        'httponly' => true,
+                        'samesite' => 'Lax'
+                    ]
+                );
+
+
+                // Remove old cookie
+                setcookie(
+                    'wishlist_session_id',
+                    '',
+                    time() - 3600,
+                    '/'
+                );
+
+
+                // Remove old database values
+                User::updateSession(
+                    $user['id'],
+                    null,
+                    null
+                );
+
+
                 return $user;
+            }
+        }
+
+        // Check remember me cookie
+        if (isset($_COOKIE['wishlist_remember'])) {
+
+            $cookie = $_COOKIE['wishlist_remember'];
+
+            $parts = explode(':', $cookie, 2);
+
+            if (count($parts) === 2) {
+
+                $selector = $parts[0];
+                $token = $parts[1];
+
+                $session = UserSession::findBySelector($selector);
+
+                if ($session) {
+
+                    $valid = hash_equals(
+                        $session['token_hash'],
+                        hash('sha256', $token)
+                    );
+
+                    if ($valid) {
+
+                        $user = User::whereEqual(
+                            'username',
+                            $session['username']
+                        );
+
+                        if ($user) {
+
+                            \App\Services\SessionManager::setAuthUser($user);
+
+                            return $user;
+                        }
+                    }
+                }
             }
         }
 
