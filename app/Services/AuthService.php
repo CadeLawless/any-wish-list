@@ -116,45 +116,6 @@ class AuthService
             return User::findByUsernameOrEmail(\App\Services\SessionManager::getUsername());
         }
 
-        // Check remember me cookie
-        if (isset($_COOKIE['wishlist_remember'])) {
-
-            $cookie = $_COOKIE['wishlist_remember'];
-
-            $parts = explode(':', $cookie, 2);
-
-            if (count($parts) === 2) {
-
-                $selector = $parts[0];
-                $token = $parts[1];
-
-                $session = UserSession::findBySelector($selector);
-
-                if ($session) {
-
-                    $valid = hash_equals(
-                        $session['token_hash'],
-                        hash('sha256', $token)
-                    );
-
-                    if ($valid) {
-
-                        $user = User::whereEqual(
-                            'username',
-                            $session['username']
-                        );
-
-                        if ($user) {
-
-                            \App\Services\SessionManager::setAuthUser($user);
-
-                            return $user;
-                        }
-                    }
-                }
-            }
-        }
-
         // Check for old session cookie
         if (isset($_COOKIE['wishlist_session_id'])) {
 
@@ -218,6 +179,45 @@ class AuthService
 
 
                 return $user;
+            }
+        }
+
+        // Check remember me cookie
+        if (isset($_COOKIE['wishlist_remember'])) {
+
+            $cookie = $_COOKIE['wishlist_remember'];
+
+            $parts = explode(':', $cookie, 2);
+
+            if (count($parts) === 2) {
+
+                $selector = $parts[0];
+                $token = $parts[1];
+
+                $session = UserSession::findBySelector($selector);
+
+                if ($session) {
+
+                    $valid = hash_equals(
+                        $session['token_hash'],
+                        hash('sha256', $token)
+                    );
+
+                    if ($valid) {
+
+                        $user = User::whereEqual(
+                            'username',
+                            $session['username']
+                        );
+
+                        if ($user) {
+
+                            \App\Services\SessionManager::setAuthUser($user);
+
+                            return $user;
+                        }
+                    }
+                }
             }
         }
 
