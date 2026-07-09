@@ -2558,6 +2558,11 @@ a.action-icon {
     grid-auto-rows: auto;
     padding: 0 8px 8px;
     position: relative;
+    gap: 0.3rem;
+
+    & .preview-image {
+        display: flex;
+    }
 }
 .theme-gift-wrap-display, .theme-background-display {
     width: 200px;
