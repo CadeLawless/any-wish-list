@@ -13,7 +13,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="icon" type="image/x-icon" href="/public/images/site-images/favicon.ico">
-    <link rel="stylesheet" type="text/css" href="/public/css/styles.css?v=2.8" />
+    <link rel="stylesheet" type="text/css" href="/public/css/styles.css?v=2.9" />
     <link rel="stylesheet" type="text/css" href="/public/css/snow.css?v=2.2" />
     <script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
     <title><?= htmlspecialchars($title ?? 'Any Wish List'); ?></title>
