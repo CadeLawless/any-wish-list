@@ -95,8 +95,8 @@ if (isset($flash['error'])) {
     </div>
 </div>
 
-<script src="/public/js/admin-table-search.js?v=2.8"></script>
+<script src="/public/js/admin-table-search.js?v=2.9"></script>
 <?php if(isset($all_gift_wraps) && count($all_gift_wraps) > 0 && isset($totalPages) && $totalPages > 1): ?>
-<script src="/public/js/pagination.js?v=2.8"></script>
+<script src="/public/js/pagination.js?v=2.9"></script>
 <?php endif; ?>
 

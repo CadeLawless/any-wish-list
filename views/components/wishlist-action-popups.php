@@ -23,7 +23,7 @@ echo PopupManager::generatePopupContainer([
         <h2 class='no-margin-top'>Delete Wish List</h2>
         <strong>Are you sure you want to delete this wish list?</strong>
         <p class='delete-wishlist-name'></p>
-        <div style='margin: 1rem 0;' class='center'>
+        <div style='margin: 1rem 0;' class='center delete-popup-buttons'>
             <a class='button secondary no-button' href='#'>No</a>
             <a class='button primary delete-wishlist-yes'>Yes</a>
         </div>"

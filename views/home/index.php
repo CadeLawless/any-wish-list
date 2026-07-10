@@ -25,4 +25,4 @@ if($account_created){
     <a class="big-button view-wish-list" href="/wishlists"><?php require(__DIR__ . "/../../public/images/site-images/icons/search.php"); ?>View Wish Lists</a>
 </div>
 
-<script src="js/popup.js?v=2.8"></script>
+<script src="js/popup.js?v=2.9"></script>

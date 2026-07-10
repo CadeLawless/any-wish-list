@@ -142,7 +142,7 @@ $(document).ready(function() {
         $(".theme-gift-wrap-display").html("<label>Gift Wrap:</label>"+$gift_wrap_clone.html());
         $($popup_container).addClass("hidden");
         $(".choose-theme-button").text("Change Theme");
-        $("body").removeClass("fixed");
+        unlockBodyScroll();
     });
 
     $(".close-container.options-close").on("click", function(e){

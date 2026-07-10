@@ -87,6 +87,9 @@ body.dark {
     --checkbox-active-text: var(--text);
 }
 /* general css */
+html.modal-scrollbar-fix {
+    scrollbar-gutter: stable;
+}
 * {
     font-family: "century-gothic";
     color: var(--text);
@@ -185,7 +188,6 @@ a.template, .popup-button.template {
 }
 .fixed {
     overflow: hidden !important;
-    padding-right: 5px;
 }
 h1 {
     margin-top: 40px;
@@ -2558,6 +2560,11 @@ a.action-icon {
     grid-auto-rows: auto;
     padding: 0 8px 8px;
     position: relative;
+    gap: 0.3rem;
+
+    & .preview-image {
+        display: flex;
+    }
 }
 .theme-gift-wrap-display, .theme-background-display {
     width: 200px;

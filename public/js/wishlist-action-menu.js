@@ -74,6 +74,8 @@ $(document).ready(function(){
                             
                             // Update the icon and text in the quick menu
                             if(newComplete === 'No'){
+                                $('.visibility-container').removeClass('hidden');
+                                $('.quick-menu-item.toggle-visibility').removeClass('hidden');
                                 fetch('/public/images/site-images/icons/cancel.php')
                                 .then(response => response.text())
                                 .then(svg => {
@@ -81,6 +83,8 @@ $(document).ready(function(){
                                 });
                                 menuItem.contents().filter(function() { return this.nodeType === 3; }).last().replaceWith(' Deactivate');
                             }else{
+                                $('.visibility-container').addClass('hidden');
+                                $('.quick-menu-item.toggle-visibility').addClass('hidden');
                                 fetch('/public/images/site-images/icons/checkmark.php')
                                 .then(response => response.text())
                                 .then(svg => {
@@ -185,6 +189,7 @@ $(document).ready(function(){
             case 'rename-wishlist':
                 let currentWishListNameElement = $('.wishlist-header').length ? $('.wishlist-header .wishlist-title') : menuItem.closest('.wishlist-grid-item').find('.wishlist-name span');
                 requestAnimationFrame(() => {
+                    lockBodyScroll();
                     $('#rename-popup .popup').addClass('active');
                     $('#rename-popup').removeClass('hidden');
                     $('#rename-input').val(currentWishListNameElement.text().trim()).focus();
@@ -202,6 +207,7 @@ $(document).ready(function(){
 
             case 'delete-wishlist':
                 requestAnimationFrame(() => {
+                    lockBodyScroll();
                     $('#delete-popup .popup').addClass('active');
                     $('#delete-popup').removeClass('hidden');
                     $('.delete-wishlist-name').text(menuItem.closest('.wishlist-grid-item').find('.wishlist-name').text());
@@ -212,6 +218,7 @@ $(document).ready(function(){
 
             case 'change-theme':
                 requestAnimationFrame(() => {
+                    lockBodyScroll();
                     $('#wish-list-show-theme-popup .popup').addClass('active');
                     $('#wish-list-show-theme-popup').removeClass('hidden');
                     $('#wish-list-show-theme-popup').data('wishlist-id', wishlistId);
@@ -244,20 +251,24 @@ $(document).ready(function(){
     $(document).on('click', '#rename-popup .close-button', function(e){
         e.preventDefault();
         $('#rename-popup').addClass("hidden").find('.popup').removeClass('active');
+        unlockBodyScroll();
     });
     
     $(window).on('click', function(e){
         if (!$(e.target).closest('#rename-popup .popup').length && !$(e.target).closest('.quick-menu-item.rename-wishlist').length) {
             $('#rename-popup').addClass("hidden").find('.popup').removeClass('active');
+            unlockBodyScroll();
         }
         if (!$(e.target).closest('#delete-popup .popup').length && !$(e.target).closest('.quick-menu-item.delete-wishlist').length) {
             $('#delete-popup').addClass("hidden").find('.popup').removeClass('active');
+            unlockBodyScroll();
         }
     });
 
     $(document).on('click', '#delete-popup .close-button, #delete-popup .no-button', function(e){
         e.preventDefault();
         $('#delete-popup').addClass("hidden").find('.popup').removeClass('active');
+        unlockBodyScroll();
     });
 
     $(document).on('submit', '#rename-form', function(e){
@@ -287,6 +298,7 @@ $(document).ready(function(){
                 addAlertMessage('Wish list renamed successfully');
                 menuItem.removeClass('disabled');
                 $('#rename-popup').addClass('hidden').find('.popup').removeClass('active');
+                unlockBodyScroll();
             },
             error: function() {
                 $("#rename-popup .popup-content h2").after(`<div class='submit-error'>Failed to rename wish list</div>`);

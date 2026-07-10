@@ -20,15 +20,10 @@ class SessionManager
     public static function setupRegistrationSession(array $userData): void
     {
         self::startSession();
-        
-        // Set session variables
+
         $_SESSION['wishlist_logged_in'] = true;
         $_SESSION['username'] = $userData['username'];
         $_SESSION['account_created'] = true;
-        
-        // Set remember me cookie
-        $cookieTime = 3600 * 24 * 365; // 1 year
-        setcookie('wishlist_session_id', session_id(), time() + $cookieTime, '');
     }
 
     /**
@@ -215,10 +210,10 @@ class SessionManager
     /**
      * Set authenticated user session data
      */
-    public static function setAuthUser(array $user, bool $remember = false): void
+    public static function setAuthUser(array $user): void
     {
         self::startSession();
-        
+
         $_SESSION['wishlist_logged_in'] = true;
         $_SESSION['username'] = $user['username'];
         $_SESSION['name'] = $user['name'];
@@ -226,12 +221,6 @@ class SessionManager
         $_SESSION['user_id'] = $user['id'];
         $_SESSION['admin'] = $user['role'] === 'Admin';
         $_SESSION['dark'] = $user['dark'] === 'Yes';
-
-        // Handle remember me
-        if ($remember) {
-            $cookieTime = 3600 * 24 * 365; // 1 year
-            setcookie('wishlist_session_id', session_id(), time() + $cookieTime, '');
-        }
     }
 
     /**
@@ -306,5 +295,20 @@ class SessionManager
     {
         self::startSession();
         unset($_SESSION['fetched_item_data']);
+    }
+
+    public static function clearRememberCookie(): void
+    {
+        setcookie(
+            'wishlist_remember',
+            '',
+            [
+                'expires' => time() - 3600,
+                'path' => '/',
+                'secure' => isset($_SERVER['HTTPS']),
+                'httponly' => true,
+                'samesite' => 'Lax'
+            ]
+        );
     }
 }
