@@ -37,8 +37,8 @@ require __DIR__ . '/../../views/components/friends-results.php';
 
 <?php require __DIR__ . '/../components/wishlist-action-popups.php'; ?>
 
-<script src="/public/js/form-validation.js?v=2.8"></script>
-<script src="/public/js/add-alert-message.js?v=2.8"></script>
-<script src="/public/js/reload-wishlists.js?v=2.8"></script>
-<script src="/public/js/wishlist-action-menu.js?v=2.8"></script>
-<script src="/public/js/wishlist-bulk-select.js?v=2.8"></script>
+<script src="/public/js/form-validation.js?v=2.9"></script>
+<script src="/public/js/add-alert-message.js?v=2.9"></script>
+<script src="/public/js/reload-wishlists.js?v=2.9"></script>
+<script src="/public/js/wishlist-action-menu.js?v=2.9"></script>
+<script src="/public/js/wishlist-bulk-select.js?v=2.9"></script>

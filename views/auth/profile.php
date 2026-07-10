@@ -177,9 +177,9 @@ if (isset($flash['error'])) {
     <?php endif; ?>
 </div>
 
-<script src="/public/js/form-validation.js?v=2.8"></script>
-<script src="/public/js/button-loading.js?v=2.8"></script>
-<script src="/public/js/profile-avatar.js?v=2.8"></script>
+<script src="/public/js/form-validation.js?v=2.9"></script>
+<script src="/public/js/button-loading.js?v=2.9"></script>
+<script src="/public/js/profile-avatar.js?v=2.9"></script>
 <script>
 $(document).ready(function(){
     // Initialize validation for name form

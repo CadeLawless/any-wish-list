@@ -330,19 +330,19 @@ $price_order = $sort_price ? "price {$sort_price}, " : "";
     <?php require __DIR__ . '/../components/wishlist-action-popups.php'; ?>
 
 <!-- Wishlist-specific scripts -->
-<script src="/public/js/copy-link.js?v=2.8"></script>
-<script src="/public/js/copy-select.js?v=2.8"></script>
-<script src="/public/js/checkbox-selection.js?v=2.8"></script>
-<script src="/public/js/wishlist-filters.js?v=2.8"></script>
-<script src="/public/js/pagination.js?v=2.8"></script>
-<script src="/public/js/admin-table-search.js?v=2.8"></script>
-<script src="/public/js/choose-theme.js?v=2.8"></script>
+<script src="/public/js/copy-link.js?v=2.9"></script>
+<script src="/public/js/copy-select.js?v=2.9"></script>
+<script src="/public/js/checkbox-selection.js?v=2.9"></script>
+<script src="/public/js/wishlist-filters.js?v=2.9"></script>
+<script src="/public/js/pagination.js?v=2.9"></script>
+<script src="/public/js/admin-table-search.js?v=2.9"></script>
+<script src="/public/js/choose-theme.js?v=2.9"></script>
 <script src="/public/scripts/autosize-master/autosize-master/dist/autosize.js"></script>
-<script src="/public/js/form-validation.js?v=2.8"></script>
-<script src="/public/js/item-form.js?v=2.8.1"></script>
-<script src="/public/js/add-alert-message.js?v=2.8"></script>
-<script src="/public/js/wishlist-action-menu.js?v=2.8"></script>
-<script src="/public/js/see-more-link.js?v=2.8"></script>
+<script src="/public/js/form-validation.js?v=2.9"></script>
+<script src="/public/js/item-form.js?v=2.9.1"></script>
+<script src="/public/js/add-alert-message.js?v=2.9"></script>
+<script src="/public/js/wishlist-action-menu.js?v=2.9"></script>
+<script src="/public/js/see-more-link.js?v=2.9"></script>
 <script>$type = "wisher"; $key_url = "";</script>
 <script>
     $(document).ready(function() {

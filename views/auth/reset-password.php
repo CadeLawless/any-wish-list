@@ -74,7 +74,7 @@ if (isset($flash['error'])) {
     </div>
 </form>
 
-<script src="/public/js/form-validation.js?v=2.8"></script>
+<script src="/public/js/form-validation.js?v=2.9"></script>
 <script>
 $(document).ready(function() {
     FormValidator.init('#reset-password-form', {
