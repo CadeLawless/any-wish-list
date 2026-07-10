@@ -102,7 +102,7 @@ class EmailService
     private function generateResetLink(string $token): string
     {
         $baseUrl = \App\Core\Config::get('app.url');
-        return $baseUrl . '/reset-password?token=' . $token;
+        return $baseUrl . '/reset-password?key=' . $token;
     }
     
     private function generateResetLinkWithEmail(string $key, string $email): string

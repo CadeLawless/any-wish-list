@@ -291,7 +291,7 @@ class AuthController extends Controller
         }
 
         // Show reset password form for GET requests
-        $key = $this->request->get('token');
+        $key = $this->request->get('key');
         
         $user = null;
         $resetKey = null;

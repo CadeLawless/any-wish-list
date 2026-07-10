@@ -1392,7 +1392,7 @@ class AdminController extends Controller
         ]);
         
         // Send reset email
-        $resetLink = \App\Core\Config::get('app.url') . "/reset-password?token={$resetToken}";
+        $resetLink = \App\Core\Config::get('app.url') . "/reset-password?key={$resetToken}";
         $emailService->sendPasswordResetEmail($editUser['email'], $editUser['name'], $resetLink);
         
         return $this->redirect("/admin/users/edit?username=" . urlencode($username) . "&pageno={$pageno}")->withSuccess('Password reset email sent successfully.');
