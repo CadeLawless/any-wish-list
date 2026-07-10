@@ -107,7 +107,7 @@ $price_order = $sort_price ? "price {$sort_price}, " : "";
                     </h1>
                     <div class="flex-row">
                         <div><strong>Status:</strong> <span id="wish-list-status"><?php echo $complete == "Yes" ? "Inactive" : "Active"; ?></span></div>
-                        <div><strong>Visibility:</strong> <span id="wish-list-visibility"><?php echo htmlspecialchars($visibility); ?></span></div>
+                        <div class="visibility-container <?= $complete == "Yes" ? "hidden" : "" ?>"><strong>Visibility:</strong> <span id="wish-list-visibility"><?php echo htmlspecialchars($visibility); ?></span></div>
                     </div>
                     <div class="copy-link">
                         <?php

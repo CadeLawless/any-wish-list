@@ -3,6 +3,20 @@
  * Handles all popup functionality with clean separation from views
  */
 
+let scrollPosition = 0;
+
+function lockBodyScroll() {
+    $('body').addClass('fixed');
+    if (document.documentElement.scrollHeight > window.innerHeight) {
+        $('html').addClass('modal-scrollbar-fix');
+    }
+}
+
+function unlockBodyScroll() {
+    $('body').removeClass('fixed');
+    $('html').removeClass('modal-scrollbar-fix');
+}
+
 $(document).ready(function() {
     
     // =============================================================================
@@ -16,7 +30,7 @@ $(document).ready(function() {
         const button = this;
         
         // Add fixed class to body to prevent scrolling
-        $("body").addClass("fixed");
+        lockBodyScroll();
         
         // Find and show the popup
         let popup, container;
@@ -55,7 +69,7 @@ $(document).ready(function() {
             popup.removeClass("hidden");
             popup.find(".image-popup").addClass("active");
             popup.find(".popup-image").attr("src", imageSrc);
-            $("body").addClass("fixed");
+            lockBodyScroll();
             
             // Trigger custom event
             popup.trigger('popup:opened', [button]);
@@ -75,7 +89,7 @@ $(document).ready(function() {
         
         // Remove fixed class only if not a first/second popup (special popup types)
         if (!$popupContainer.hasClass("first") && !$popupContainer.hasClass("second")) {
-            $("body").removeClass("fixed");
+            unlockBodyScroll();
         }
         
         // Hide the popup
@@ -104,7 +118,7 @@ $(document).ready(function() {
         
         // Remove fixed class only if not a first/second popup
         if (!$popupContainer.hasClass("first") && !$popupContainer.hasClass("second")) {
-            $("body").removeClass("fixed");
+            unlockBodyScroll();
         }
         
         // Hide the popup
@@ -182,14 +196,14 @@ $(document).ready(function() {
                         hidePopup(popupFirst[0]);
                         // Remove fixed class only if this was the last popup
                         if ($(".popup-container:not(.hidden)").length === 0) {
-                            $("body").removeClass("fixed");
+                            unlockBodyScroll();
                         }
                     } else {
                         // Close all remaining popups
                         openPopups.each(function() {
                             hidePopup(this);
                         });
-                        $("body").removeClass("fixed");
+                        unlockBodyScroll();
                     }
                 }
             }
@@ -208,7 +222,7 @@ $(document).ready(function() {
                 
                 // If no more popups, remove fixed class
                 if ($(".popup-container:not(.hidden)").length === 0) {
-                    $("body").removeClass("fixed");
+                    unlockBodyScroll();
                 }
             }
         }
@@ -239,7 +253,7 @@ $(document).ready(function() {
         if (popup.length) {
             popup.removeClass("hidden");
             popup.find(".popup").addClass("active");
-            $("body").addClass("fixed");
+            lockBodyScroll();
             
             // Trigger custom event
             popup.trigger('popup:opened');
@@ -253,7 +267,7 @@ $(document).ready(function() {
         $(".popup-container:not(.hidden)").each(function() {
             hidePopup(this);
         });
-        $("body").removeClass("fixed");
+        unlockBodyScroll();
     }
     
     // =============================================================================
