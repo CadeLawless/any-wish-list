@@ -54,6 +54,6 @@ if (isset($flash['error'])) {
     }
 </style>
 
-<script src="/public/js/form-validation.js?v=2.8"></script>
+<script src="/public/js/form-validation.js?v=2.9"></script>
 <script src="https://cdn.jsdelivr.net/npm/sortablejs@latest/Sortable.min.js"></script>
-<script src="/public/js/gift-wrap-form.js?v=2.8"></script>
+<script src="/public/js/gift-wrap-form.js?v=2.9"></script>

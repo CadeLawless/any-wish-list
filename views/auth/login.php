@@ -62,7 +62,7 @@ if (isset($flash['error'])) {
     <p style="font-size: 14px" class="large-input center">Don't have an account? <a style="font-size: inherit;" href="/register">Create one here</a></p>
 </form>
 
-<script src="/public/js/form-validation.js?v=2.8"></script>
+<script src="/public/js/form-validation.js?v=2.9"></script>
 <script>
 $(document).ready(function(){
     // Initialize form validation

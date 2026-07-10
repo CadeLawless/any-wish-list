@@ -122,7 +122,7 @@ if (isset($flash['success'])) {
     </div>
 </div>
 
-<script src="/public/js/see-more-link.js?v=2.8"></script>
+<script src="/public/js/see-more-link.js?v=2.9"></script>
 <script>$type = "buyer";</script>
 <script>
 	$(document).ready(function(){

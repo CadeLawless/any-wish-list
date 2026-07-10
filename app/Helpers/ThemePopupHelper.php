@@ -14,7 +14,7 @@ class ThemePopupHelper
         
         ob_start();
         ?>
-        <div id="wish-list-show-theme-popup" class='popup-container first <?php echo $type; ?> hidden'>
+        <div id="wish-list-show-theme-popup" class='popup-container <?php echo $type; ?> hidden'>
             <div class='popup fullscreen theme-popup-container'>
                 <img class='background-theme desktop-background hidden' src="" />
                 <img class='background-theme mobile-background hidden' src="" />
