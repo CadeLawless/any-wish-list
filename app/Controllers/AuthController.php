@@ -309,10 +309,8 @@ class AuthController extends Controller
         // Validate we have the required information
         if (!$user || !$resetKey || !$userEmail) {
             ob_start();
-            var_dump($this->request->get());
-            $output = ob_get_clean();
             return $this->view('auth/reset-password-error', AuthController::resetPasswordDataWithTitle([
-                'error' => 'Invalid reset link.' . $output,
+                'error' => 'Invalid reset link.',
                 'link_text' => 'Go to Login',
                 'link_url' => '/login'
             ]), 'auth');
