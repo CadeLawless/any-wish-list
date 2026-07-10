@@ -17,7 +17,7 @@ class EmailService
 
     public function sendVerificationEmail(string $email, string $username): bool
     {
-        $subject = 'Verify Your Email for Wish List';
+        $subject = 'Verify Your Email for Any Wish List';
         
         // Get the email_key from the database for this user
         $user = \App\Models\User::findByUsernameOrEmail($username);
@@ -33,7 +33,7 @@ class EmailService
 
     public function sendPasswordResetEmail(string $email, string $name, string $resetKey): bool
     {
-        $subject = 'Reset Your Password for Wish List';
+        $subject = 'Reset Your Password for Any Wish List';
         $resetLink = $this->generateResetLink($resetKey);
         
         $message = $this->getPasswordResetEmailTemplate($name, $resetLink);
@@ -43,8 +43,8 @@ class EmailService
 
     public function sendPasswordResetEmailWithUsername(string $email, string $username, string $resetToken): bool
     {
-        $subject = 'Reset Your Password for Wish List';
-        $resetLink = $this->generateResetLinkWithEmail($resetToken, $email);
+        $subject = 'Reset Your Password for Any Wish List';
+        $resetLink = $this->generateResetLink($resetToken);
         
         $message = $this->getPasswordResetEmailTemplate($username, $resetLink);
         
@@ -53,7 +53,7 @@ class EmailService
 
     public function sendWelcomeEmail(string $email, string $username): bool
     {
-        $subject = 'Welcome to Wish List!';
+        $subject = 'Welcome to Any Wish List!';
         $message = $this->getWelcomeEmailTemplate($username);
         
         return $this->sendEmail($email, $subject, $message);
@@ -105,17 +105,6 @@ class EmailService
         return $baseUrl . '/reset-password?key=' . $token;
     }
     
-    private function generateResetLinkWithEmail(string $key, string $email): string
-    {
-        $baseUrl = \App\Core\Config::get('app.url');
-        return $baseUrl . '/reset-password?key=' . $key . '&email=' . urlencode($email);
-    }
-
-    private function generateToken(string $data): string
-    {
-        return hash('sha256', $data . time() . \App\Core\Config::get('app.key', 'default-secret-key'));
-    }
-
     private function getVerificationEmailTemplate(string $username, string $link): string
     {
         return "
