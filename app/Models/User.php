@@ -42,9 +42,9 @@ class User extends Model
         return $result ?: null;
     }
 
-    public static function findByResetToken(string $token): ?array
+    public static function findByResetPasswordKey(string $key): ?array
     {
-        $stmt = \App\Core\Database::query("SELECT * FROM " . static::$table . " WHERE reset_token = ? AND reset_expires_at > NOW()", [$token]);
+        $stmt = \App\Core\Database::query("SELECT * FROM " . static::$table . " WHERE reset_password_key = ? AND reset_password_expiration > NOW()", [$key]);
         $result = $stmt->get_result()->fetch_assoc();
         return $result ?: null;
     }

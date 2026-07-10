@@ -292,18 +292,17 @@ class AuthController extends Controller
 
         // Show reset password form for GET requests
         $key = $this->request->get('key');
-        $email = $this->request->get('email');
         
         $user = null;
         $resetKey = null;
         $userEmail = null;
         
-        if ($key && $email) {
-            $user = User::findByUsernameOrEmail($email);
+        if ($key) {
+            $user = User::findByResetPasswordKey($key);
 
             if ($user && $user['reset_password_key'] === $key) {
                 $resetKey = $key;
-                $userEmail = $email;
+                $userEmail = $user['email'];
             }
         }
         
