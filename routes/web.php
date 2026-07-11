@@ -1,5 +1,5 @@
 <?php
-
+// Testing action
 use App\Controllers\AuthController;
 use App\Controllers\FriendController;
 use App\Controllers\AdminController;
