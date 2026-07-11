@@ -8,4 +8,5 @@ _archive/
 # Item images (user uploaded content)
 public/images/item-images/
 public/images/profile-pictures/
+public/images/site-images/themes/
 app/Services/debug.log
