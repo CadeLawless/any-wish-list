@@ -46,7 +46,7 @@ class User extends Model
     {
         //var_dump("SELECT * FROM " . static::$table . " WHERE reset_password_key = ? AND reset_password_expiration > NOW()", $key);
         //exit;
-        $stmt = \App\Core\Database::query("SELECT * FROM " . static::$table . " WHERE reset_password_key = ?", [$key]);
+        $stmt = \App\Core\Database::query("SELECT * FROM " . static::$table . " WHERE reset_password_key = ? AND reset_password_expiration > NOW()", [$key]);
         $result = $stmt->get_result()->fetch_assoc();
         return $result ?: null;
     }
