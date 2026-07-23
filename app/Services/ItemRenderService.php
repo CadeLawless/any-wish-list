@@ -66,9 +66,11 @@ class ItemRenderService
             <?php endif; ?>
             <div class='item-image-container image-popup-button'>
                 <img class='item-image' src='<?php echo $imagePath; ?>' alt='wishlist item image'>
-                <a class="action-icon edit-image-button" href='#'>
-                    <?php require(__DIR__ . '/../../public/images/site-images/icons/edit.php'); ?>
-                </a>
+                <?php if ($type === 'wisher'): ?>
+                    <a class="action-icon edit-image-button" href='#'>
+                        <?php require(__DIR__ . '/../../public/images/site-images/icons/edit.php'); ?>
+                    </a>
+                <?php endif; ?>
             </div>
             <div class='item-description' <?php if($isPurchasedInBuyerView) echo "style='flex-grow: 0;'"; ?>>
                 <?php if(!$isPurchasedInBuyerView): ?>

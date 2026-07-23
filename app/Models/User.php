@@ -44,8 +44,6 @@ class User extends Model
 
     public static function findByResetPasswordKey(string $key): ?array
     {
-        //var_dump("SELECT * FROM " . static::$table . " WHERE reset_password_key = ? AND reset_password_expiration > NOW()", $key);
-        //exit;
         $now = date("Y-m-d H:i:s");
         $stmt = \App\Core\Database::query("SELECT * FROM " . static::$table . " WHERE reset_password_key = ? AND reset_password_expiration > ?", [$key, $now]);
         $result = $stmt->get_result()->fetch_assoc();
